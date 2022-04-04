@@ -39,15 +39,15 @@ func main() {
 	s.Identify.Token = config.Cfg.ServerInfo.ServerToken
 	s.Identify.LargeThreshold = 250
 
-	//Start the listening of the other functions
-	//responder.RegisterPlugin(s)
-	command.InitializeCommands(s)
-
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
 	err = s.Open()
 	if err != nil {
 		logging.Log.Panicln("Error opening the websocket!: ", err)
 	}
+
+	//Start the listening of the other functions
+	//responder.RegisterPlugin(s)
+	command.InitializeCommands(s)
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
