@@ -3,7 +3,7 @@ module CleverFox2
 go 1.18
 
 require (
-	github.com/bwmarrin/discordgo v0.24.1-0.20220404162002-0c27cedbcb3f
+	github.com/bwmarrin/discordgo v0.24.1-0.20220404223327-c3c6c1b6c212
 	github.com/sirupsen/logrus v1.8.1
 	gopkg.in/yaml.v2 v2.4.0
 )
