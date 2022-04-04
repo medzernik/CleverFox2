@@ -1,6 +1,7 @@
 package main
 
 import (
+	"CleverFox2/command"
 	"CleverFox2/config"
 	"CleverFox2/logging"
 	"fmt"
@@ -40,6 +41,7 @@ func main() {
 
 	//Start the listening of the other functions
 	//responder.RegisterPlugin(dg)
+	command.Start(dg)
 
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
 	err = dg.Open()
