@@ -29,22 +29,22 @@ func main() {
 	// Create a new Discord session using the provided bot token. Panic if failed.
 	logging.Log.Infoln("Starting the bot...")
 
-	dg, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
+	s, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
 	if err != nil {
 		logging.Log.Panicln("error creating Discord session: ", err)
 	}
 
 	//Get the intents that are needed
-	dg.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
-	dg.Identify.Token = config.Cfg.ServerInfo.ServerToken
-	dg.Identify.LargeThreshold = 250
+	s.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
+	s.Identify.Token = config.Cfg.ServerInfo.ServerToken
+	s.Identify.LargeThreshold = 250
 
 	//Start the listening of the other functions
-	//responder.RegisterPlugin(dg)
-	command.Start(dg)
+	//responder.RegisterPlugin(s)
+	command.InitializeCommands(s)
 
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
-	err = dg.Open()
+	err = s.Open()
 	if err != nil {
 		logging.Log.Panicln("Error opening the websocket!: ", err)
 	}
@@ -57,7 +57,7 @@ func main() {
 
 	// Cleanly close down the Discord session.
 
-	err2 := dg.Close()
+	err2 := s.Close()
 	if err2 != nil {
 		logging.Log.Panicln("Error closing the session: ", err2)
 	}

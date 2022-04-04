@@ -29,19 +29,23 @@ var (
 	}
 )
 
-func init() {
+// ReadyInfoPublic Variable for later use
+var ReadyInfoPublic *discordgo.Ready
+
+func InitializeCommands(s *discordgo.Session) {
 	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
 			h(s, i)
 		}
 	})
+	Start(s)
 }
 
 func Start(s *discordgo.Session) {
 	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
 
 	for i, v := range commands {
-		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, *GuildID, v)
+		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, s.State.Guilds[0].ID, v)
 		if err != nil {
 			log.Panicf("Cannot create '%v' command: %v", v.Name, err)
 		}
@@ -70,8 +74,5 @@ func Start(s *discordgo.Session) {
 
 	*/
 }
-
-// ReadyInfoPublic Variable for later use
-var ReadyInfoPublic *discordgo.Ready
 
 // Ready Runs when the bot starts and engages all the commands
