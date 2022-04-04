@@ -1,0 +1,28 @@
+# YOU MUST COPY THIS CONFIG TO THE ROOT OF THE FILESYSTEM WHERE THE (MAIN) EXECUTABLE IS. KEEP THIS HERE FOR EXPERIMENTATION, VERSIONING, ETC.
+# Server configurations
+serverInfo:
+  # WeatherAPI of openWeatherMap for your bot. Get yours at the webpage (its free)
+  weatherAPIKey: ""
+  # The token of the bot to run it. You get yours on the discord developer page when you add it to the server.
+  serverToken: ""
+  # Bot logo
+  botLogo: ""
+  # Bot name
+  botName: "CleverFox"
+  # Log level (0 - Trace, 1 - Debug, 2 - Info, 3 - Warn, 4 - Error, 5 - Fatal)
+  logLevel: ""
+
+# Various modules to enable or disable
+modules:
+  # Administration module includes: kick, ban, mute, purgeUsers
+  administration: false
+  # Not used right now
+  logging: true
+  # openWeather command /weather
+  weather: false
+
+# Service channels
+channelLog:
+  channelLogID: ""
+
+

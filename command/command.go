@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	integerOptionMinValue = 1.0
+	//integerOptionMinValue = 1.0
 
 	commands = []*discordgo.ApplicationCommand{
 		{
@@ -28,9 +28,6 @@ var (
 		},
 	}
 )
-
-// ReadyInfoPublic Variable for later use
-var ReadyInfoPublic *discordgo.Ready
 
 func InitializeCommands(s *discordgo.Session) {
 	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {

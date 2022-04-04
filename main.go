@@ -1,3 +1,7 @@
+//This is the main setup point for the Discord bot.
+//For the correct functioning, the core package group is required (main, config, logging and command packages)
+//You can configure using additional modules in the config or on the fly using the bot.
+//Additional modules will become available as development progresses
 package main
 
 import (
