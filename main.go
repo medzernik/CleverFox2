@@ -25,8 +25,9 @@ func main() {
 		logging.Log.Traceln("Loaded the logging system")
 	}
 
-	logging.Log.Infoln("Starting the bot...")
 	// Create a new Discord session using the provided bot token. Panic if failed.
+	logging.Log.Infoln("Starting the bot...")
+
 	dg, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
 	if err != nil {
 		logging.Log.Panicln("error creating Discord session: ", err)
@@ -37,6 +38,7 @@ func main() {
 	dg.Identify.Token = config.Cfg.ServerInfo.ServerToken
 	dg.Identify.LargeThreshold = 250
 
+	//Start the listening of the other functions
 	//responder.RegisterPlugin(dg)
 
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
