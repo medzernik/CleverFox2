@@ -17,11 +17,6 @@ type Config struct {
 		LogLevel      string `yaml:"logLevel"`
 	} `yaml:"serverInfo"`
 	Modules struct {
-		Administration  bool `yaml:"administration"`
-		Logging         bool `yaml:"logging"`
-		Weather         bool `yaml:"weather"`
-		Purge           bool `yaml:"purge"`
-		COVIDSlovakInfo bool `yaml:"COVIDSlovakInfo"`
 	} `yaml:"modules"`
 	ChannelLog struct {
 		ChannelLogID string `yaml:"channelLogID"`

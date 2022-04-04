@@ -28,7 +28,6 @@ func StartLogging() error {
 		Log.SetLevel(logrus.FatalLevel)
 	default:
 		Log.SetLevel(logrus.InfoLevel)
-
 	}
 
 	// You could set this to any `io.Writer` such as a file
