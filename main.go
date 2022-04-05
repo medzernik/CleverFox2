@@ -60,7 +60,6 @@ func main() {
 	<-KillSignal
 
 	// Cleanly close down the Discord session.
-
 	err2 := s.Close()
 	if err2 != nil {
 		logging.Log.Panicln("Error closing the session: ", err2)

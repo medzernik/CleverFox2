@@ -6,8 +6,6 @@ import (
 )
 
 var (
-	//integerOptionMinValue = 1.0
-
 	commands = []*discordgo.ApplicationCommand{
 		{
 			Name: "basic-command",
