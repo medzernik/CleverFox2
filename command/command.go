@@ -111,8 +111,16 @@ var (
 // InitializeCommands function runs to initialize commands in the given session.
 func InitializeCommands(s *discordgo.Session) {
 	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-		if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
-			h(s, i)
+		switch i.Type {
+		case discordgo.InteractionApplicationCommand:
+			if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
+				h(s, i)
+			}
+		case discordgo.InteractionMessageComponent:
+
+			if h, ok := commandHandlers[i.MessageComponentData().CustomID]; ok {
+				h(s, i)
+			}
 		}
 	})
 	Start(s)
