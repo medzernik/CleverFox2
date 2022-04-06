@@ -1,10 +1,15 @@
 package command
 
 import (
+	"CleverFox2/logging"
+	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"log"
+	"os"
+	"time"
 )
 
+//This is the setup part for the commands where the commands are defined and listed and also input sanitised by Discord.
 var (
 	commands = []*discordgo.ApplicationCommand{
 		{
@@ -15,43 +20,12 @@ var (
 			Description: "Basic command",
 		},
 		{
-			Name:        "subcommands",
-			Description: "Subcommands and command groups example",
-			Options: []*discordgo.ApplicationCommandOption{
-				// When a command has subcommands/subcommand groups
-				// It must not have top-level options, they aren't accesible in the UI
-				// in this case (at least not yet), so if a command has
-				// subcommands/subcommand any groups registering top-level options
-				// will cause the registration of the command to fail
-
-				{
-					Name:        "",
-					Description: "Subcommands group",
-					Options: []*discordgo.ApplicationCommandOption{
-						// Also, subcommand groups aren't capable of
-						// containing options, by the name of them, you can see
-						// they can only contain subcommands
-						{
-							Name:        "nested-subcommand",
-							Description: "Nested subcommand",
-							Type:        discordgo.ApplicationCommandOptionSubCommand,
-						},
-					},
-					Type: discordgo.ApplicationCommandOptionSubCommandGroup,
-				},
-				// Also, you can create both subcommand groups and subcommands
-				// in the command at the same time. But, there's some limits to
-				// nesting, count of subcommands (top level and nested) and options.
-				// Read the intro of slash-commands docs on Discord dev portal
-				// to get more information
-				{
-					Name:        "subcommand",
-					Description: "Top-level subcommand",
-					Type:        discordgo.ApplicationCommandOptionSubCommand,
-				},
-			},
+			Name:        "kill",
+			Description: "Kills the HOSTING bot remotely!",
 		},
 	}
+
+	//This part of the command process actually lists the logic and responses of the commands. The "name" must match the "name" of the above section.
 	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"basic-command": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -61,9 +35,80 @@ var (
 				},
 			})
 		},
+		"kill": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseModal,
+			})
+
+			guildInfo, err := s.Guild(i.Interaction.GuildID)
+			if err != nil {
+				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.ERR, "Error."+err.Error(), discordgo.EmbedTypeRich)
+				logging.Log.Error("Error getting guild info", err)
+				return
+			}
+
+			var disabled bool = true
+
+			if guildInfo.OwnerID == i.Member.User.ID {
+				logging.Log.Info("Bot shutting down at the request of the owner...")
+				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.OK, "Check successfull. Would terminate.", discordgo.EmbedTypeRich)
+				disabled = false
+
+				//Kill the bot
+				//os.Exit(0)
+			} else {
+				logging.Log.Info("User ID: " + i.Member.User.ID + " name: " + i.Member.User.Username + " Tried to shut down the bot.")
+				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.AUTH, "Not the server owner.", discordgo.EmbedTypeRich)
+			}
+
+			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Content: "Press the button to kill the bot. Works only for the owner.",
+					Flags:   1 << 6,
+					Components: []discordgo.MessageComponent{
+						discordgo.ActionsRow{
+							Components: []discordgo.MessageComponent{
+								discordgo.Button{
+									Emoji: discordgo.ComponentEmoji{
+										Name: "⚠️",
+									},
+									Label:    "Kill the bot",
+									Style:    discordgo.DangerButton,
+									CustomID: "terminate",
+									Disabled: disabled,
+								},
+							},
+						},
+					},
+				},
+			})
+			if err != nil {
+				logging.Log.Warn(err)
+				fmt.Println(err.Error())
+				return
+			}
+
+			return
+
+		},
+
+		"terminate": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			logging.Log.Info("Terminating session.")
+
+			time.Sleep(1 * time.Second)
+			//Kill the bot
+			err2 := s.Close()
+			if err2 != nil {
+				logging.Log.Panicln("Error closing the session: ", err2)
+			}
+			time.Sleep(2 * time.Second)
+			os.Exit(0)
+		},
 	}
 )
 
+// InitializeCommands function runs to initialize commands in the given session.
 func InitializeCommands(s *discordgo.Session) {
 	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
@@ -73,6 +118,7 @@ func InitializeCommands(s *discordgo.Session) {
 	Start(s)
 }
 
+//Start registers commands to be created
 func Start(s *discordgo.Session) {
 	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
 
@@ -106,5 +152,3 @@ func Start(s *discordgo.Session) {
 
 	*/
 }
-
-// Ready Runs when the bot starts and engages all the commands
