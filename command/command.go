@@ -1,6 +1,7 @@
 package command
 
 import (
+	"CleverFox2/info"
 	"CleverFox2/logging"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
@@ -90,6 +91,7 @@ var (
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponsePong,
 			})
+
 			logging.Log.Info("Terminating session.")
 
 			time.Sleep(1 * time.Second)
@@ -100,6 +102,15 @@ var (
 			}
 			time.Sleep(2 * time.Second)
 			os.Exit(0)
+		},
+		//get the invite for the server, if it has a vanity URL, print that
+		"invite": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
+
+			info.GetServerInvite(s, i)
+			return
 		},
 	}
 )
