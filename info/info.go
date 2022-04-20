@@ -6,8 +6,14 @@ import "github.com/bwmarrin/discordgo"
 // UserServerInfo This function is able to list information about the user.
 //Returns a struct to be able to work with it
 //TODO: make it work with an appcommand
-func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate, cmd []interface{}) {
+func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) *discordgo.Guild {
+	for _, guildStruct := range s.State.Guilds {
+		if guildStruct.ID == i.Interaction.GuildID {
+			return guildStruct
+		}
+	}
 
+	return nil
 }
 
 // UserAdminInfo This function should be able to detect the information about a user by his ID
@@ -15,7 +21,13 @@ func UserAdminInfo(s *discordgo.Session, i *discordgo.InteractionCreate, cmd []i
 
 }
 
-// GetServerInvite get the
-func GetServerInvite(s *discordgo.Session, i *discordgo.InteractionCreate) {
-
+// GetVanityServerInvite get the
+func GetVanityServerInvite(s *discordgo.Session, i *discordgo.InteractionCreate) string {
+	var inviteLink string
+	for _, g := range s.State.Guilds {
+		if g.ID == i.Interaction.GuildID {
+			inviteLink = g.VanityURLCode
+		}
+	}
+	return inviteLink
 }

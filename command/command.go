@@ -24,6 +24,14 @@ var (
 			Name:        "kill",
 			Description: "Kills the HOSTING bot remotely!",
 		},
+		{
+			Name:        "invite",
+			Description: "Gets the vanity URL of the server, if it exists",
+		},
+		{
+			Name:        "serverinfo",
+			Description: "Gets all available information about the server",
+		},
 	}
 
 	//This part of the command process actually lists the logic and responses of the commands. The "name" must match the "name" of the above section.
@@ -109,7 +117,11 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			info.GetServerInvite(s, i)
+			if inviteLink := info.GetVanityServerInvite(s, i); inviteLink != "" {
+				s.ChannelMessageSend(i.Interaction.ChannelID, inviteLink)
+			} else {
+				s.ChannelMessageSend(i.Interaction.ChannelID, "Server has no vanity URL.")
+			}
 			return
 		},
 	}
