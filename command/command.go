@@ -84,7 +84,6 @@ var (
 			}
 
 			return
-
 		},
 
 		"terminate": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
