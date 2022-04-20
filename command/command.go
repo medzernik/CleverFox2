@@ -124,6 +124,18 @@ var (
 			}
 			return
 		},
+		"serverinfo": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
+
+			if guild := info.UserServerInfo(s, i); guild != nil {
+				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprint(guild.ID))
+			} else {
+				s.ChannelMessageSend(i.Interaction.ChannelID, "Server info unavailable")
+			}
+			return
+		},
 	}
 )
 
