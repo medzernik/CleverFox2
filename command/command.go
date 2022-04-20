@@ -37,12 +37,11 @@ var (
 		},
 		"kill": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
-				Type: discordgo.InteractionResponseModal,
+				Type: discordgo.InteractionResponsePong,
 			})
 
 			guildInfo, err := s.Guild(i.Interaction.GuildID)
 			if err != nil {
-				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.ERR, "Error."+err.Error(), discordgo.EmbedTypeRich)
 				logging.Log.Error("Error getting guild info", err)
 				return
 			}
@@ -51,14 +50,9 @@ var (
 
 			if guildInfo.OwnerID == i.Member.User.ID {
 				logging.Log.Info("Bot shutting down at the request of the owner...")
-				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.OK, "Check successfull. Would terminate.", discordgo.EmbedTypeRich)
+
 				disabled = false
 
-				//Kill the bot
-				//os.Exit(0)
-			} else {
-				logging.Log.Info("User ID: " + i.Member.User.ID + " name: " + i.Member.User.Username + " Tried to shut down the bot.")
-				//command.SendTextEmbedCommand(s, i.ChannelID, command.StatusBot.AUTH, "Not the server owner.", discordgo.EmbedTypeRich)
 			}
 
 			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -94,6 +88,9 @@ var (
 		},
 
 		"terminate": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
 			logging.Log.Info("Terminating session.")
 
 			time.Sleep(1 * time.Second)
