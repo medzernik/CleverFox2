@@ -21,7 +21,7 @@ type ServerInfo struct {
 // UserServerInfo This function is able to list information about the user.
 //Returns a struct to be able to work with it
 //TODO: make it work with an appcommand
-func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) *discordgo.Guild {
+func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) ServerInfo {
 
 	for _, guildStruct := range s.State.Guilds {
 		if guildStruct.ID == i.Interaction.GuildID {
