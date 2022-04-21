@@ -12,6 +12,25 @@ type ServerInfo struct {
 	Description       string
 	VanityURL         string
 	AFKChannelID      string
+	AFKTimeout        int
+	ApproxMembers     int
+	ApproxPresence    int
+	MaxMembers        int
+	MaxPresence       int
+	MFALevel          discordgo.MfaLevel
+	NSFWLevel         discordgo.GuildNSFWLevel
+	PeopleSubscribed  int
+	NitroBoostTier    discordgo.PremiumTier
+	Unavailable       bool
+	Icon              string
+	VerificationLevel discordgo.VerificationLevel
+}
+type ServerInfoString struct {
+	ID                string
+	Name              string
+	Description       string
+	VanityURL         string
+	AFKChannelID      string
 	AFKTimeout        string
 	ApproxMembers     string
 	ApproxPresence    string
@@ -59,7 +78,26 @@ func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (Serve
 	return serverStruct, nil
 }
 
-func (serverInfo *ServerInfo) toString(formatting string) {
+func (serverInfo *ServerInfo) toString(string) ServerInfoString {
+	return ServerInfoString{
+		ID:                "",
+		Name:              "",
+		Description:       "",
+		VanityURL:         "",
+		AFKChannelID:      "",
+		AFKTimeout:        "",
+		ApproxMembers:     "",
+		ApproxPresence:    "",
+		MaxMembers:        "",
+		MaxPresence:       "",
+		MFALevel:          "",
+		NSFWLevel:         "",
+		PeopleSubscribed:  "",
+		NitroBoostTier:    "",
+		Unavailable:       "",
+		Icon:              "",
+		VerificationLevel: "",
+	}
 
 }
 
