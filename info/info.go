@@ -31,7 +31,7 @@ type ServerInfo struct {
 //TODO: make it work with an appcommand
 //TODO: making it work as a method to format the string result on demand before printing.
 func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (ServerInfo, error) {
-	serverIndex, err := getServerLocation(s, i)
+	serverIndex, err := findServerInArray(s, i)
 	if err != nil {
 		return ServerInfo{}, err
 	}
@@ -63,7 +63,8 @@ func (serverInfo *ServerInfo) to_string(formating string) {
 
 }
 
-func getServerLocation(s *discordgo.Session, i *discordgo.InteractionCreate) (int, error) {
+//TODO: make this a method
+func findServerInArray(s *discordgo.Session, i *discordgo.InteractionCreate) (int, error) {
 
 	for guildId := range s.State.Guilds {
 		if s.State.Guilds[guildId].ID == i.Interaction.GuildID {
