@@ -129,10 +129,10 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			if guild := info.UserServerInfo(s, i); guild != nil {
-				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprint(guild.ID))
+			if guild, err := info.UserServerInfo(s, i); err != nil {
+				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprint(guild))
 			} else {
-				s.ChannelMessageSend(i.Interaction.ChannelID, "Server info unavailable")
+				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprintf("Server info unavailable, error: ", err))
 			}
 			return
 		},
