@@ -29,6 +29,7 @@ type ServerInfo struct {
 // UserServerInfo This function is able to list information about the user.
 //Returns a struct to be able to work with it
 //TODO: make it work with an appcommand
+//TODO: making it work as a method to format the string result on demand before printing.
 func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (ServerInfo, error) {
 	serverIndex, err := getServerLocation(s, i)
 	if err != nil {
