@@ -59,7 +59,7 @@ func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (Serve
 	return serverStruct, nil
 }
 
-func (serverInfo *ServerInfo) to_string(formating string) {
+func (serverInfo *ServerInfo) toString(formatting string) {
 
 }
 
