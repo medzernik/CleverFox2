@@ -20,7 +20,8 @@ type Config struct {
 	Modules struct {
 	} `yaml:"modules"`
 	ChannelLog struct {
-		ChannelLogID string `yaml:"channelLogID"`
+		ChannelLogID       string `yaml:"channelLogID"`
+		CringeGIFChannelID string `yaml:"cringeGIFChannelID"`
 	} `yaml:"channelLog"`
 }
 
