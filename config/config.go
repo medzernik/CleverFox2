@@ -23,6 +23,9 @@ type Config struct {
 		ChannelLogID       string `yaml:"channelLogID"`
 		CringeGIFChannelID string `yaml:"cringeGIFChannelID"`
 	} `yaml:"channelLog"`
+	Tracked struct {
+		TrackedID []string `yaml:"trackedID"`
+	}
 }
 
 var Cfg Config
