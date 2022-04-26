@@ -38,6 +38,8 @@ func main() {
 	if err != nil {
 		logging.Log.Panicln("error creating Discord session: ", err)
 	}
+	//Set the max message cache to 100 messages.
+	s.State.MaxMessageCount = 100
 
 	//Get the intents that are needed
 	s.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
