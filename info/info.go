@@ -24,6 +24,7 @@ type ServerInfo struct {
 	Unavailable       bool
 	Icon              string
 	VerificationLevel discordgo.VerificationLevel
+	Channels          []*discordgo.Channel
 }
 type ServerInfoString struct {
 	ID                string
@@ -43,6 +44,7 @@ type ServerInfoString struct {
 	Unavailable       string
 	Icon              string
 	VerificationLevel string
+	Channels          []string
 }
 
 // UserServerInfo This function is able to list information about the user.
@@ -50,7 +52,7 @@ type ServerInfoString struct {
 //TODO: make it work with an appcommand
 //TODO: making it work as a method to format the string result on demand before printing.
 func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (ServerInfo, error) {
-	serverIndex, err := findServerInArray(s, i)
+	serverIndex, err := FindServerInArray(s, i.Interaction.GuildID)
 	if err != nil {
 		return ServerInfo{}, err
 	}
@@ -73,6 +75,7 @@ func UserServerInfo(s *discordgo.Session, i *discordgo.InteractionCreate) (Serve
 		Unavailable:       s.State.Guilds[serverIndex].Unavailable,
 		Icon:              s.State.Guilds[serverIndex].Icon,
 		VerificationLevel: s.State.Guilds[serverIndex].VerificationLevel,
+		Channels:          s.State.Guilds[serverIndex].Channels,
 	}
 
 	return serverStruct, nil
@@ -97,15 +100,15 @@ func (serverInfo *ServerInfo) toString(string) ServerInfoString {
 		Unavailable:       "",
 		Icon:              "",
 		VerificationLevel: "",
+		Channels:          nil,
 	}
 
 }
 
-//TODO: make this a method
-func findServerInArray(s *discordgo.Session, i *discordgo.InteractionCreate) (int, error) {
-
+// FindServerInArray Find a server by its ID
+func FindServerInArray(s *discordgo.Session, guildID string) (int, error) {
 	for guildId := range s.State.Guilds {
-		if s.State.Guilds[guildId].ID == i.Interaction.GuildID {
+		if s.State.Guilds[guildId].ID == guildID {
 			return guildId, nil
 		}
 	}
