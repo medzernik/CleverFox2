@@ -9,8 +9,6 @@ import (
 )
 
 // DeleteCringe checks all channels for a specific gif from a specific person and then deletes it if it hasn't been posted in the GIF channel :)
-//TODO: vycistit array po zmazani
-//TODO: Checknut vsetky channely az na (blacklist)
 func DeleteCringe(s *discordgo.Session) {
 	//user to track and channels to ignore
 	trackedID := []string{"272292297020932096"}
