@@ -11,7 +11,7 @@ import (
 // DeleteCringe checks all channels for a specific gif from a specific person and then deletes it if it hasn't been posted in the GIF channel :)
 func DeleteCringe(s *discordgo.Session) {
 	//user to track and channels to ignore
-	trackedID := []string{"272292297020932096"}
+	trackedID := []string{"206720832695828480"}
 	trackedChannelBlacklist := []string{"893975128138973265", "893231726267101185"}
 
 	guild, err := s.State.Guild("869556493316395091")
@@ -59,7 +59,7 @@ func DeleteCringe(s *discordgo.Session) {
 				}
 
 			}
-			channel.Messages = channel.Messages[:0]
+			channel.Messages = nil
 		}
 
 	}
