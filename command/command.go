@@ -30,7 +30,7 @@ var (
 		},
 		{
 			Name:        "serverinfo",
-			Description: "Gets all available information about the server",
+			Description: "Gets all the available information about the server",
 		},
 	}
 
