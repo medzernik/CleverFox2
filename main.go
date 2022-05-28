@@ -8,7 +8,6 @@ import (
 	"CleverFox2/command"
 	"CleverFox2/config"
 	"CleverFox2/logging"
-	"CleverFox2/passive"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"github.com/sirupsen/logrus"
@@ -55,7 +54,6 @@ func main() {
 	//Start the listening of the other functions
 	//responder.RegisterPlugin(s)
 	command.InitializeCommands(s)
-	go passive.DeleteCringe(s)
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
