@@ -1,13 +1,6 @@
 package passive
 
-import (
-	"CleverFox2/config"
-	"fmt"
-	"github.com/bwmarrin/discordgo"
-	"strings"
-	"time"
-)
-
+/*
 // DeleteCringe checks all channels for a specific gif from a specific person and then deletes it if it hasn't been posted in the GIF channel :)
 func DeleteCringe(s *discordgo.Session) {
 	//user to track and channels to ignore
@@ -64,3 +57,5 @@ func DeleteCringe(s *discordgo.Session) {
 
 	}
 }
+
+*/
