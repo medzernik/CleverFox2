@@ -1,6 +1,7 @@
 package command
 
 import (
+	"CleverFox2/Embed"
 	"CleverFox2/info"
 	"CleverFox2/logging"
 	"fmt"
@@ -129,6 +130,9 @@ var (
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponsePong,
 			})
+
+			var result Embed.EmbedInfo
+			result.New(Embed.OK, "hello, this is working", discordgo.EmbedTypeRich).SendToChannel(s, i)
 
 			return
 		},
