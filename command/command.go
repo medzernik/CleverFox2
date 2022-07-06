@@ -55,13 +55,14 @@ var (
 				return
 			}
 
-			var disabled bool = true
+			//setup a button that is disabled until rechecked
+			var disabled bool = false
 
+			//check whether the owner of the server is the same as the user who sent the command
 			if guildInfo.OwnerID == i.Member.User.ID {
 				logging.Log.Info("Bot shutting down at the request of the owner...")
 
 				disabled = false
-
 			}
 
 			err = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -94,7 +95,7 @@ var (
 
 			return
 		},
-
+		//termination function itself - only used for terminating the bot specifically, therefore as an anonymous function
 		"terminate": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponsePong,
@@ -129,11 +130,6 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			if guild, err := info.UserServerInfo(s, i); err != nil {
-				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprint(guild))
-			} else {
-				s.ChannelMessageSend(i.Interaction.ChannelID, fmt.Sprintf("Server info unavailable, error: ", err))
-			}
 			return
 		},
 	}
