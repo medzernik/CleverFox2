@@ -117,6 +117,7 @@ func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.Interact
 
 }
 
+//TODO: Move this to another type (and maybe even a module) and make it a method for converting the channelID,User,Mention things.
 func ToChannelID() string {
 	return ""
 }
