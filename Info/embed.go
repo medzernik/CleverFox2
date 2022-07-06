@@ -83,6 +83,7 @@ func (self *EmbedInfo) NewEmbedRich(status int, message string) *EmbedInfo {
 }
 
 // SendToChannel Sends the embed to the channel. Requires the session and interaction information
+// TODO: Make it a variadic anonymous function that can be done using variadic argument
 func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	// Get the author data from the config
 	author := discordgo.MessageEmbedAuthor{
@@ -111,5 +112,4 @@ func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.Interact
 
 	// Send a message as an embed.
 	s.ChannelMessageSendEmbed(i.ChannelID, &embed)
-
 }

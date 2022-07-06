@@ -2,8 +2,21 @@
 // It also handles basic logic of converting the formatting of userIDs to strings and back.
 package Info
 
-import "github.com/bwmarrin/discordgo"
+import (
+	"fmt"
+	"github.com/bwmarrin/discordgo"
+)
 
-func PrintBotStatus(s *discordgo.Session, i *discordgo.InteractionCreate) {
+// PrintBotStatus Prints out on how many servers the bot is currently running and the author name
+func PrintBotStatus(s *discordgo.Session, i *discordgo.InteractionCreate) string {
+	var output string
 
+	switch len(s.State.Guilds) {
+	case 1:
+		output += fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " server")
+	default:
+		output += fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " servers")
+	}
+
+	return output
 }

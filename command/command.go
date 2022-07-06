@@ -32,6 +32,10 @@ var (
 			Name:        "serverinfo",
 			Description: "Gets all the available information about the server",
 		},
+		{
+			Name:        "botstatus",
+			Description: "Gets all the available information about the bot",
+		},
 	}
 
 	//This part of the command process actually lists the logic and responses of the commands. The "name" must match the "name" of the above section.
@@ -130,6 +134,17 @@ var (
 			result.NewEmbedRich(10, "this is an error").SendToChannel(s, i)
 
 			return
+		},
+		"botstatus": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
+
+			var result Info.EmbedInfo
+			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
+
+			return
+
 		},
 	}
 )
