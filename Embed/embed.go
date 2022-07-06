@@ -33,36 +33,40 @@ type (
 	}
 )
 
-// New Creates a new embed using the status and message information required
-func (self *EmbedInfo) New(status int, message string, embedType discordgo.EmbedType) *EmbedInfo {
+// NewEmbedRich Creates a new embed using the status and message information required
+func (self *EmbedInfo) NewEmbedRich(status int, message string) *EmbedInfo {
 	//case fill the status message
 	switch status {
 	case 0:
 		self.status.statusNumber = status
 		self.status.statusColor = 3066993
 		self.status.statusText = "OK"
+
 	case 1:
 		self.status.statusNumber = status
 		self.status.statusColor = 15158332
-		self.status.statusText = "ERROR"
+		self.status.statusText = ":bangbang: ERROR"
+
 	case 2:
 		self.status.statusNumber = status
 		self.status.statusColor = 15105570
-		self.status.statusText = "WARNING"
+		self.status.statusText = ":warning: WARNING"
 
 	case 3:
 		self.status.statusNumber = status
 		self.status.statusColor = 3447003
-		self.status.statusText = "SYNTAX"
+		self.status.statusText = ":question: SYNTAX"
 
 	case 4:
 		self.status.statusNumber = status
 		self.status.statusColor = 15105570
-		self.status.statusText = "AUTHENTICATION"
+		self.status.statusText = ":no_entry: AUTHENTICATION"
+
 	case 5:
 		self.status.statusNumber = status
 		self.status.statusColor = 16776960
-		self.status.statusText = "AUTOCORRECTING"
+		self.status.statusText = ":wrench: AUTOCORRECTING"
+
 	default:
 		self.status.statusColor = 800080
 		self.status.statusText = "UNDEFINED"
@@ -72,8 +76,8 @@ func (self *EmbedInfo) New(status int, message string, embedType discordgo.Embed
 	}
 
 	//Fill out the rest of the struct
+	self.embedType = discordgo.EmbedTypeRich
 	self.message = message
-	self.embedType = embedType
 	return self
 }
 
@@ -108,12 +112,9 @@ func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.Interact
 
 	embedArray = append(embedArray, embed)
 
-	//Send a message as an embed.
-	_, err := s.ChannelMessageSendEmbed(i.ChannelID, &embed)
-	if err != nil {
-		s.ChannelMessageSend(i.ChannelID, "**[TESTERR]** Error: "+err.Error())
-		return
-	}
+	//Send a message as an embed
+	s.ChannelMessageSendEmbed(i.ChannelID, &embed)
+
 }
 
 func ToChannelID() string {

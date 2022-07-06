@@ -132,7 +132,7 @@ var (
 			})
 
 			var result Embed.EmbedInfo
-			result.New(Embed.OK, "hello, this is working", discordgo.EmbedTypeRich).SendToChannel(s, i)
+			result.NewEmbedRich(Embed.WARNING, "smth is wrong").SendToChannel(s, i)
 
 			return
 		},
