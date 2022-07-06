@@ -10,10 +10,15 @@ import (
 // PrintBotStatus Prints out on how many servers the bot is currently running and the author name
 func PrintBotStatus(s *discordgo.Session, i *discordgo.InteractionCreate) string {
 
+	s.ChannelMessageSend(i.ChannelID, fmt.Sprintf("%v", s.State))
+	var output string
 	switch len(s.State.Guilds) {
+
 	case 1:
-		return fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " server")
+		output += fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " server")
 	default:
-		return fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " servers")
+		output += fmt.Sprintln("The bot is running on ", len(s.State.Guilds), " servers")
 	}
+
+	return output
 }
