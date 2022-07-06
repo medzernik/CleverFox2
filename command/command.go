@@ -1,7 +1,7 @@
 package command
 
 import (
-	"CleverFox2/Embed"
+	"CleverFox2/Info"
 	"CleverFox2/info"
 	"CleverFox2/logging"
 	"fmt"
@@ -132,9 +132,8 @@ var (
 			})
 
 			var result Embed.EmbedInfo
-			var userlol Embed.UserID = "206720832695828480"
 
-			result.NewEmbedRich(Embed.WARNING, userlol.ToUserMention().ToString()).SendToChannel(s, i)
+			result.NewEmbedRich(10, "this is an error").SendToChannel(s, i)
 
 			return
 		},
