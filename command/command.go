@@ -132,7 +132,9 @@ var (
 			})
 
 			var result Embed.EmbedInfo
-			result.NewEmbedRich(Embed.WARNING, "smth is wrong").SendToChannel(s, i)
+			var userlol Embed.UserID = "206720832695828480"
+
+			result.NewEmbedRich(Embed.WARNING, userlol.ToUserMention().ToString()).SendToChannel(s, i)
 
 			return
 		},

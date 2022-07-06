@@ -1,4 +1,5 @@
-// Package Embed is part of the core group
+// Package Embed handles embed logic which is the main way for the bot to communicate with a Discord server.
+// It also handles basic logic of converting the formatting of userIDs to strings and back.
 package Embed
 
 import (
@@ -7,7 +8,7 @@ import (
 	"time"
 )
 
-//Define the iota for an "enum" of the message state
+// Define the iota for an "enum" of the message state
 const (
 	OK = iota
 	ERROR
@@ -17,9 +18,9 @@ const (
 	AUTOCORRECTING
 )
 
-//Define the type for the embed to process
+// Define the type for the embed to process
 type (
-	//EmbedStatus struct to use for easier classification of embed types
+	// embedStatus struct to use for easier classification of embed types
 	embedStatus struct {
 		statusNumber int
 		statusText   string
@@ -83,7 +84,7 @@ func (self *EmbedInfo) NewEmbedRich(status int, message string) *EmbedInfo {
 
 // SendToChannel Sends the embed to the channel. Requires the session and interaction information
 func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.InteractionCreate) {
-	//Fixed author message.
+	// Get the author data from the config
 	author := discordgo.MessageEmbedAuthor{
 		URL:          "",
 		Name:         config.Cfg.ServerInfo.BotName,
@@ -91,9 +92,7 @@ func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.Interact
 		ProxyIconURL: "",
 	}
 
-	var embedArray []discordgo.MessageEmbed
-	//MessageEmbed info
-	//Thinking of adding timestamp time.Now().Format(time.RFC3339)
+	// Create the embed based on incoming information (from the previous method call) and sending it to the channel provided.
 	embed := discordgo.MessageEmbed{
 		URL:         "",
 		Type:        self.embedType,
@@ -110,23 +109,7 @@ func (self *EmbedInfo) SendToChannel(s *discordgo.Session, i *discordgo.Interact
 		Fields:      nil,
 	}
 
-	embedArray = append(embedArray, embed)
-
-	//Send a message as an embed
+	// Send a message as an embed.
 	s.ChannelMessageSendEmbed(i.ChannelID, &embed)
 
-}
-
-//TODO: Move this to another type (and maybe even a module) and make it a method for converting the channelID,User,Mention things.
-func ToChannelID() string {
-	return ""
-}
-func RemoveChannelID() string {
-	return ""
-}
-func ToMention() string {
-	return ""
-}
-func RemoveMention() string {
-	return ""
 }
