@@ -2,7 +2,6 @@ package command
 
 import (
 	"CleverFox2/Info"
-	"CleverFox2/info"
 	"CleverFox2/logging"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
@@ -119,11 +118,6 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			if inviteLink := info.GetVanityServerInvite(s, i); inviteLink != "" {
-				s.ChannelMessageSend(i.Interaction.ChannelID, inviteLink)
-			} else {
-				s.ChannelMessageSend(i.Interaction.ChannelID, "Server has no vanity URL.")
-			}
 			return
 		},
 		"serverinfo": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -131,7 +125,7 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			var result Embed.EmbedInfo
+			var result Info.EmbedInfo
 
 			result.NewEmbedRich(10, "this is an error").SendToChannel(s, i)
 
