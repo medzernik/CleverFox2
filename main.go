@@ -9,8 +9,8 @@ import (
 	"CleverFox2/config"
 	"CleverFox2/logging"
 	"fmt"
+	spinnerThing "github.com/briandowns/spinner"
 	"github.com/bwmarrin/discordgo"
-	"github.com/schollz/progressbar/v3"
 	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
@@ -50,19 +50,11 @@ func main() {
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
 	fmt.Println("Initializing the session to Discord...")
 	err = s.Open()
-	//TODO: Make a progress bar with select
 
-	bar := progressbar.DefaultBytes(
-		-1,
-		"starting up",
-	)
-	for i := 0; i < 1000; i++ {
-		bar.Add(1)
-		time.Sleep(5 * time.Millisecond)
-	}
-	if err != nil {
-		logging.Log.Panicln("Error opening the websocket!: ", err)
-	}
+	spin := spinnerThing.New(spinnerThing.CharSets[9], 100*time.Millisecond) // Build our new spinner
+	spin.Start()                                                             // Start the spinner
+	time.Sleep(4 * time.Second)                                              // Run for some time to simulate work
+	spin.Stop()
 
 	//Start the listening of the other functions
 	//responder.RegisterPlugin(s)
@@ -80,4 +72,13 @@ func main() {
 		logging.Log.Panicln("Error closing the session: ", err2)
 	}
 
+}
+
+func spinner(delay time.Duration) {
+	for {
+		for _, r := range `-\|/` {
+			fmt.Printf("\r%c", r)
+			time.Sleep(delay)
+		}
+	}
 }
