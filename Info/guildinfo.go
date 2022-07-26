@@ -22,3 +22,7 @@ func PrintBotStatus(s *discordgo.Session, i *discordgo.InteractionCreate) string
 
 	return output
 }
+
+func FindGuildIDFromInteraction(s *discordgo.Session, i *discordgo.InteractionCreate) string {
+	return ""
+}

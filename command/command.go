@@ -36,6 +36,19 @@ var (
 			Name:        "botstatus",
 			Description: "Gets all the available information about the bot",
 		},
+		{
+			Name:        "isadmin",
+			Description: "Is user an admin?",
+			Options: []*discordgo.ApplicationCommandOption{
+
+				{
+					Type:        discordgo.ApplicationCommandOptionUser,
+					Name:        "user-mention",
+					Description: "user-mention",
+					Required:    true,
+				},
+			},
+		},
 	}
 
 	//This part of the command process actually lists the logic and responses of the commands. The "name" must match the "name" of the above section.
@@ -141,6 +154,33 @@ var (
 			})
 
 			var result Info.EmbedInfo
+			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
+
+			return
+
+		},
+		"isadmin": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
+
+			var result Info.EmbedInfo
+
+			var User Info.UserID = Info.UserID(i.ApplicationCommandData().Options[0].UserValue(s).ID)
+			isAdmin, err := IsAdmin(s, i, User)
+			if err != nil {
+				result.NewEmbedRich(Info.ERROR, "Error getting user: "+fmt.Sprintf(err.Error())).SendToChannel(s, i)
+				return
+			}
+			if isAdmin == true {
+				resultText := "User " + User.ToUserMention().ToString() + " is an admin"
+				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)
+			} else {
+				resultText := "User " + User.ToUserMention().ToString() + " is not an admin"
+				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)
+			}
+			fmt.Println(isAdmin)
+
 			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
 
 			return

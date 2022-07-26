@@ -10,10 +10,12 @@ import (
 	"CleverFox2/logging"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/schollz/progressbar/v3"
 	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
@@ -46,7 +48,18 @@ func main() {
 	s.Identify.LargeThreshold = 250
 
 	// Open a websocket connection to Discord and begin listening. Panic if failed.
+	fmt.Println("Initializing the session to Discord...")
 	err = s.Open()
+	//TODO: Make a progress bar with select
+
+	bar := progressbar.DefaultBytes(
+		-1,
+		"starting up",
+	)
+	for i := 0; i < 1000; i++ {
+		bar.Add(1)
+		time.Sleep(5 * time.Millisecond)
+	}
 	if err != nil {
 		logging.Log.Panicln("Error opening the websocket!: ", err)
 	}
