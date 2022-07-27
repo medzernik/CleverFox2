@@ -3,7 +3,6 @@ package command
 import (
 	"CleverFox2/Info"
 	"CleverFox2/logging"
-	"CleverFox2/spinner"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"log"
@@ -165,7 +164,6 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			go spinner.StartSpin(spinner.Finish, "working")
 			var result Info.EmbedInfo
 
 			var User Info.UserID = Info.UserID(i.ApplicationCommandData().Options[0].UserValue(s).ID)
@@ -183,7 +181,6 @@ var (
 			}
 
 			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
-			spinner.Finish <- struct{}{}
 
 			fmt.Println("Is admin:", isAdmin)
 			return
