@@ -15,6 +15,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
@@ -46,7 +47,7 @@ func main() {
 	s.Identify.Token = config.Cfg.ServerInfo.ServerToken
 	s.Identify.LargeThreshold = 250
 
-	go spinner.SpinnerFun(spinner.Finish, "Initializing the session to Discord...")
+	go spinner.StartSpin(spinner.Finish, "Initializing the session to Discord...")
 	//fmt.Println("\nInitializing the session to Discord...")
 	err = s.Open()
 	if err != nil {
@@ -58,10 +59,11 @@ func main() {
 	//responder.RegisterPlugin(s)
 	//fmt.Println("\nInitializing commands")
 	//Initialize the spinner fun
-	go spinner.SpinnerFun(spinner.Finish, "Initializing commands")
+	go spinner.StartSpin(spinner.Finish, "Initializing commands")
 	command.InitializeCommands(s)
 	spinner.Finish <- struct{}{}
 
+	time.Sleep(1 * time.Second)
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	KillSignal := make(chan os.Signal, 1)

@@ -165,7 +165,7 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			go spinner.SpinnerFun(spinner.Finish, "working")
+			go spinner.StartSpin(spinner.Finish, "working")
 			var result Info.EmbedInfo
 
 			var User Info.UserID = Info.UserID(i.ApplicationCommandData().Options[0].UserValue(s).ID)
@@ -181,11 +181,11 @@ var (
 				resultText := "User " + User.ToUserMention().ToString() + " is not an admin"
 				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)
 			}
-			fmt.Println(isAdmin)
 
 			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
-
 			spinner.Finish <- struct{}{}
+
+			fmt.Println("Is admin:", isAdmin)
 			return
 
 		},
