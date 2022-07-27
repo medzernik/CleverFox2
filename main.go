@@ -8,14 +8,13 @@ import (
 	"CleverFox2/command"
 	"CleverFox2/config"
 	"CleverFox2/logging"
+	"CleverFox2/spinner"
 	"fmt"
-	spinnerThing "github.com/briandowns/spinner"
 	"github.com/bwmarrin/discordgo"
 	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 func main() {
@@ -37,7 +36,7 @@ func main() {
 
 	s, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
 	if err != nil {
-		logging.Log.Panicln("error creating Discord session: ", err)
+		logging.Log.Panicln("error creating New session: ", err)
 	}
 	//Set the max message cache to 20 messages.
 	s.State.MaxMessageCount = 20
@@ -47,18 +46,21 @@ func main() {
 	s.Identify.Token = config.Cfg.ServerInfo.ServerToken
 	s.Identify.LargeThreshold = 250
 
-	// Open a websocket connection to Discord and begin listening. Panic if failed.
-	fmt.Println("Initializing the session to Discord...")
+	go spinner.SpinnerFun(spinner.Finish, "Initializing the session to Discord...")
+	//fmt.Println("\nInitializing the session to Discord...")
 	err = s.Open()
-
-	spin := spinnerThing.New(spinnerThing.CharSets[9], 100*time.Millisecond) // Build our new spinner
-	spin.Start()                                                             // Start the spinner
-	time.Sleep(4 * time.Second)                                              // Run for some time to simulate work
-	spin.Stop()
+	if err != nil {
+		println(err)
+	}
+	spinner.Finish <- struct{}{}
 
 	//Start the listening of the other functions
 	//responder.RegisterPlugin(s)
+	//fmt.Println("\nInitializing commands")
+	//Initialize the spinner fun
+	go spinner.SpinnerFun(spinner.Finish, "Initializing commands")
 	command.InitializeCommands(s)
+	spinner.Finish <- struct{}{}
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
@@ -72,13 +74,4 @@ func main() {
 		logging.Log.Panicln("Error closing the session: ", err2)
 	}
 
-}
-
-func spinner(delay time.Duration) {
-	for {
-		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
-			time.Sleep(delay)
-		}
-	}
 }

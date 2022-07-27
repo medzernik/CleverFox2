@@ -3,6 +3,7 @@ package command
 import (
 	"CleverFox2/Info"
 	"CleverFox2/logging"
+	"CleverFox2/spinner"
 	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"log"
@@ -164,6 +165,7 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
+			go spinner.SpinnerFun(spinner.Finish, "working")
 			var result Info.EmbedInfo
 
 			var User Info.UserID = Info.UserID(i.ApplicationCommandData().Options[0].UserValue(s).ID)
@@ -183,6 +185,7 @@ var (
 
 			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
 
+			spinner.Finish <- struct{}{}
 			return
 
 		},
@@ -191,6 +194,7 @@ var (
 
 // InitializeCommands function runs to initialize commands in the given session.
 func InitializeCommands(s *discordgo.Session) {
+
 	s.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		switch i.Type {
 		case discordgo.InteractionApplicationCommand:
@@ -205,6 +209,7 @@ func InitializeCommands(s *discordgo.Session) {
 		}
 	})
 	Start(s)
+
 }
 
 //Start registers commands to be created
