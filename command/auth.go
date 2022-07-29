@@ -20,6 +20,7 @@ func roleCheckAdmin(s *discordgo.Session, guildID string) (map[string]struct{}, 
 	}
 
 	for _, j := range guild.Roles {
+		// This doesn't work properly. Only works when the server role has ADMINISTRATOR and NO OTHER priviledge set. Probably a bug in the library
 		if j.Permissions == discordgo.PermissionAdministrator || j.Permissions == discordgo.PermissionAll {
 			roleOutput[j.ID] = struct{}{}
 		}

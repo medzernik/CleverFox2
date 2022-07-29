@@ -174,7 +174,7 @@ var (
 			}
 			if isAdmin == true {
 				resultText := "User " + User.ToUserMention().ToString() + " is an admin"
-				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)
+				result.NewEmbedRich(Info.OK, resultText, "TRUE").SendToChannel(s, i)
 			} else {
 				resultText := "User " + User.ToUserMention().ToString() + " is not an admin"
 				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)

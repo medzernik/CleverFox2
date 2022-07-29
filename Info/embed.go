@@ -4,7 +4,9 @@ package Info
 
 import (
 	"CleverFox2/config"
+	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"strings"
 	"time"
 )
 
@@ -30,18 +32,28 @@ type (
 	EmbedInfo struct {
 		message   string
 		status    embedStatus
+		title     string
 		embedType discordgo.EmbedType
 	}
 )
 
 // NewEmbedRich Creates a new embed using the status and message information required
-func (self *EmbedInfo) NewEmbedRich(status int, message string) *EmbedInfo {
+func (self *EmbedInfo) NewEmbedRich(status int, message string, title ...string) *EmbedInfo {
 	//case fill the status message
+	titleProcessed := "OK"
+
+	if len(title) != 0 {
+		titleProcessed = ""
+		for _, j := range title {
+			titleProcessed = fmt.Sprintf("%s %s", strings.ToUpper(titleProcessed), j)
+		}
+	}
+
 	switch status {
 	case 0:
 		self.status.statusNumber = status
 		self.status.statusColor = 3066993
-		self.status.statusText = "OK"
+		self.status.statusText = titleProcessed
 
 	case 1:
 		self.status.statusNumber = status
