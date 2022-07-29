@@ -174,13 +174,11 @@ var (
 			}
 			if isAdmin == true {
 				resultText := "User " + User.ToUserMention().ToString() + " is an admin"
-				result.NewEmbedRich(Info.OK, resultText, "TRUE").SendToChannel(s, i)
+				result.NewEmbedRich(Info.OK, resultText, "true").SendToChannel(s, i)
 			} else {
 				resultText := "User " + User.ToUserMention().ToString() + " is not an admin"
-				result.NewEmbedRich(Info.OK, resultText).SendToChannel(s, i)
+				result.NewEmbedRich(Info.OK, resultText, "false").SendToChannel(s, i)
 			}
-
-			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
 
 			fmt.Println("Is admin:", isAdmin)
 			return
