@@ -4,9 +4,8 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"log"
+	"os"
 )
-
-//var modal = tview.NewModal()
 
 func StartGUI() {
 	app := tview.NewApplication()
@@ -23,6 +22,7 @@ func StartGUI() {
 		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
 			if buttonIndex == 1 {
 				app.Stop()
+				os.Exit(0)
 			} else {
 				app.SetRoot(flex, true)
 			}

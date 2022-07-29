@@ -10,8 +10,8 @@ import (
 	"CleverFox2/logging"
 	"CleverFox2/spinner"
 	"CleverFox2/tviewsystem"
+	"fmt"
 	"github.com/bwmarrin/discordgo"
-
 	"github.com/sirupsen/logrus"
 	"time"
 )
@@ -62,19 +62,7 @@ func main() {
 	time.Sleep(500 * time.Millisecond)
 	tviewsystem.StartGUI()
 
-	/*
-		// Wait here until CTRL-C or other term signal is received.
-		fmt.Println("Bot is now running.  Press CTRL-C to exit.")
-		KillSignal := make(chan os.Signal, 1)
-		signal.Notify(KillSignal, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-		<-KillSignal
-
-		// Cleanly close down the Discord session.
-		err2 := s.Close()
-		if err2 != nil {
-			logging.Log.Panicln("Error closing the session: ", err2)
-		}
-
-	*/
+	// Wait here until CTRL-C or other term signal is received.
+	fmt.Println("Bot is now running.  Pass a struct{}{} to <-KillSignal to exit.")
 
 }
