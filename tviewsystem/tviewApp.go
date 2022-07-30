@@ -2,6 +2,7 @@
 package tviewsystem
 
 import (
+	"bytes"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"os"
@@ -74,7 +75,7 @@ func StartGUI() error {
 // StatusPush - function to draw a new status?
 func StatusPush(update string) {
 
-	StatusTextView.SetText(update)
-
+	//StatusTextView.SetText(update).SetScrollable(true)
+	StatusTextView.Write(bytes.NewBufferString(update + "\n").Bytes())
 	app.Draw()
 }
