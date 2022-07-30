@@ -1,3 +1,4 @@
+// Package tviewsystem that makes the terminal GUI possible.
 package tviewsystem
 
 import (
@@ -6,15 +7,16 @@ import (
 	"os"
 )
 
+// StartGUI Starts and sets up the main GUI
 func StartGUI() error {
 	app := tview.NewApplication()
-	flex := tview.NewFlex().
+	mainView := tview.NewFlex().
 		AddItem(tview.NewBox().SetBorder(true).SetTitle("Left (1/2 x width of Top)"), 0, 1, false).
 		AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
 			AddItem(tview.NewBox().SetBorder(true).SetTitle("CleverFox 2 Go Edition"), 0, 1, false).
 			AddItem(tview.NewBox().SetBorder(true).SetTitle("Status"), 5, 1, false), 0, 2, false).
 		AddItem(tview.NewBox().SetBorder(true).SetTitle("Right (20 cols)"), 20, 1, false)
-	app.SetRoot(flex, true).EnableMouse(true)
+	app.SetRoot(mainView, true).EnableMouse(true)
 
 	//Define the various dialogs, this one is for the quit dialog.
 	quitDialog := tview.NewModal().
@@ -25,7 +27,7 @@ func StartGUI() error {
 				app.Stop()
 				os.Exit(0)
 			} else {
-				app.SetRoot(flex, true)
+				app.SetRoot(mainView, true)
 			}
 		})
 	//Capture ESC key for a dialog to quit the bot.
@@ -48,4 +50,9 @@ func StartGUI() error {
 	}
 
 	return nil
+}
+
+// DrawStatus - function to draw a new status?
+func DrawStatus() {
+
 }
