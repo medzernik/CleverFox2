@@ -27,7 +27,9 @@ The core modules include:
 - **Tviewsystem** - A CLI GUI (if a supported terminal is available).
 
 These modules cannot be disabled, although they can be limited, they will always be used by some parts of the bot.
+
 Tviewsystem disables itself when the bot fails to initialize the terminal interface.
+
 Administration commands via the Tviewsystem GUI are extremely limited. A possible force enable setting may be added
 later, though controlling administrative settings from within the bot should not work. The only interface for admin work
 should be an admin user interacting with the bot from within Discord.
