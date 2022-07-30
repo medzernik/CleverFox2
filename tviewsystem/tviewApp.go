@@ -6,6 +6,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"os"
+	"time"
 )
 
 //Initiate the main application var
@@ -76,6 +77,6 @@ func StartGUI() error {
 func StatusPush(update string) {
 
 	//StatusTextView.SetText(update).SetScrollable(true)
-	StatusTextView.Write(bytes.NewBufferString(update + "\n").Bytes())
+	StatusTextView.Write(bytes.NewBufferString("[" + time.Now().Format(time.Kitchen) + "] " + update + "\n").Bytes())
 	app.Draw()
 }
