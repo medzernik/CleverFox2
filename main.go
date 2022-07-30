@@ -63,6 +63,8 @@ func main() {
 	spinner.Finish <- struct{}{}
 
 	time.Sleep(500 * time.Millisecond)
+
+	//Initialize the GUI system. If this fails, fallback to the stdout legacy printouts.
 	if err := tviewsystem.StartGUI(); err != nil {
 		logrus.Errorf("error starting the GUI. STDOUT only. %s", err)
 		// Wait here until CTRL-C or other term signal is received.
