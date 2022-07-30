@@ -11,13 +11,14 @@ import (
 var app = tview.NewApplication()
 
 //Testing
-var statusTextView = tview.NewTextView()
+var StatusTextView = tview.NewTextView()
 
 //For some exemplary reason this must be done like this...
 //init updates all the functions that otherwise return stuff, while keeping the vars in global scope of the package.
 func init() {
-	statusTextView.SetBorder(true)
-	statusTextView.SetTitle("Status")
+	StatusTextView.SetBorder(true)
+	StatusTextView.SetTitle("Status")
+	StatusTextView.SetScrollable(true)
 }
 
 //Initiate the main view
@@ -25,7 +26,7 @@ var mainView = tview.NewFlex().
 	AddItem(tview.NewBox().SetBorder(true).SetTitle("Left (1/2 x width of Top)"), 0, 1, false).
 	AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(tview.NewBox().SetBorder(true).SetTitle("CleverFox 2 Go Edition"), 0, 1, false).
-		AddItem(statusTextView, 5, 1, false), 0, 2, false).
+		AddItem(StatusTextView, 5, 1, false), 0, 2, false).
 	AddItem(tview.NewBox().SetBorder(true).SetTitle("Right (20 cols)"), 20, 1, false)
 
 //Initiate the quit dialog
@@ -72,5 +73,8 @@ func StartGUI() error {
 
 // StatusPush - function to draw a new status?
 func StatusPush(update string) {
-	statusTextView.SetText(update)
+
+	StatusTextView.SetText(update)
+
+	app.Draw()
 }
