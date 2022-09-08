@@ -9,6 +9,8 @@ You can configure using additional modules in the config or on the fly using the
 
 Additional modules will become available as development progresses.
 
+![img.png](img.png)
+
 # Modules
 
 The module system is created so you can choose which parts of the bot are active.

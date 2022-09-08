@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/briandowns/spinner v1.19.0
-	github.com/bwmarrin/discordgo v0.25.1-0.20220801155050-f60fb54c52b6
+	github.com/bwmarrin/discordgo v0.26.1
 	github.com/gdamore/tcell/v2 v2.5.2
 	github.com/rivo/tview v0.0.0-20220801133142-711ef394f9b3
 	github.com/sirupsen/logrus v1.9.0
@@ -22,8 +22,8 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mattn/go-runewidth v0.0.14-0.20210830053702-dc8fe66265af // indirect
 	github.com/rivo/uniseg v0.3.1 // indirect
-	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
-	golang.org/x/sys v0.0.0-20220731174439-a90be440212d // indirect
+	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90 // indirect
+	golang.org/x/sys v0.0.0-20220907062415-87db552b00fd // indirect
 	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
