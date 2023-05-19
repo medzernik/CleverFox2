@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/briandowns/spinner v1.23.0
-	github.com/bwmarrin/discordgo v0.27.1
+	github.com/bwmarrin/discordgo v0.27.2-0.20230514155329-1252b71f3800
 	github.com/gdamore/tcell/v2 v2.6.0
 	github.com/rivo/tview v0.0.0-20230511053024-822bd067b165
 	github.com/sirupsen/logrus v1.9.2

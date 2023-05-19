@@ -9,11 +9,12 @@ import (
 	"CleverFox2/config"
 	"CleverFox2/logging"
 	"CleverFox2/tviewsystem"
-	"github.com/bwmarrin/discordgo"
-	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/bwmarrin/discordgo"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -37,22 +38,22 @@ func main() {
 	logging.Log.Infoln("Starting the bot...")
 	tviewsystem.StatusPush("Starting the bot...")
 
-	s, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
+	discord_session, err := discordgo.New("Bot " + config.Cfg.ServerInfo.ServerToken)
 	if err != nil {
 		logging.Log.Panicln("error creating New session: ", err)
 	}
 	//Set the max message cache to 20 messages.
-	s.State.MaxMessageCount = 20
+	discord_session.State.MaxMessageCount = 20
 
 	//Get the intents that are needed
-	s.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
-	s.Identify.Token = config.Cfg.ServerInfo.ServerToken
-	s.Identify.LargeThreshold = 250
+	discord_session.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsAll)
+	discord_session.Identify.Token = config.Cfg.ServerInfo.ServerToken
+	discord_session.Identify.LargeThreshold = 250
 
 	//go spinner.StartSpin(spinner.Finish, "Initializing the session to Discord...")
 	tviewsystem.StatusPush("Initializing the session to Discord...")
 	//fmt.Println("\nInitializing the session to Discord...")
-	err = s.Open()
+	err = discord_session.Open()
 	if err != nil {
 		println(err)
 	}
@@ -61,7 +62,7 @@ func main() {
 	//Start the listening of the other functions
 	//go spinner.StartSpin(spinner.Finish, "Initializing commands.")
 	tviewsystem.StatusPush("Initializing commands.")
-	command.InitializeCommands(s)
+	command.InitializeCommands(discord_session)
 	//spinner.Finish <- struct{}{}
 
 	//time.Sleep(500 * time.Millisecond)

@@ -4,14 +4,17 @@ import (
 	"CleverFox2/Info"
 	"CleverFox2/logging"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
-	"log"
 	"os"
 	"time"
+
+	"github.com/bwmarrin/discordgo"
 )
 
-//This is the setup part for the commands where the commands are defined and listed and also input sanitised by Discord.
+// This is the setup part for the commands where the commands are defined and listed and also input sanitised by Discord.
 var (
+	dmPermission                   = false
+	defaultMemberPermissions int64 = discordgo.PermissionManageServer
+
 	commands = []*discordgo.ApplicationCommand{
 		{
 			Name: "basic-command",
@@ -19,6 +22,12 @@ var (
 			// Commands/options without description will fail the registration
 			// of the command.
 			Description: "Basic command",
+		},
+		{
+			Name:                     "permission-overview",
+			Description:              "Command for demonstration of default command permissions",
+			DefaultMemberPermissions: &defaultMemberPermissions,
+			DMPermission:             &dmPermission,
 		},
 		{
 			Name:        "kill",
@@ -144,7 +153,7 @@ var (
 
 			var result Info.EmbedInfo
 
-			result.NewEmbedRich(10, "this is an error").SendToChannel(s, i)
+			result.NewEmbedRich(Info.SYNTAX, "this is an error").SendToChannel(s, i)
 
 			return
 		},
@@ -207,14 +216,14 @@ func InitializeCommands(s *discordgo.Session) {
 
 }
 
-//Start registers commands to be created
+// Start registers commands to be created
 func Start(s *discordgo.Session) {
 	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
 
 	for i, v := range commands {
-		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, s.State.Guilds[0].ID, v)
+		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, "1105531701674922044", v)
 		if err != nil {
-			log.Panicf("Cannot create '%v' command: %v", v.Name, err)
+			fmt.Printf("Cannot create '%v' command: %v", v.Name, err)
 		}
 		registeredCommands[i] = cmd
 	}

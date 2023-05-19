@@ -3,10 +3,11 @@ package tviewsystem
 
 import (
 	"bytes"
-	"github.com/gdamore/tcell/v2"
-	"github.com/rivo/tview"
 	"os"
 	"time"
+
+	"github.com/gdamore/tcell/v2"
+	"github.com/rivo/tview"
 )
 
 // Initiate the main application var
