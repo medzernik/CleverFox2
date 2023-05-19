@@ -151,9 +151,24 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			var result Info.EmbedInfo
+			guild_preview, err := s.GuildPreview(i.GuildID)
+			if err != nil {
+				logging.Log.Error(err)
+			}
 
-			result.NewEmbedRich(Info.SYNTAX, "this is an error").SendToChannel(s, i)
+			result := Info.NewEmbed().
+				SetTitle(guild_preview.Name).
+				SetDescription(guild_preview.Description).
+				AddField("🪪 Server ID", guild_preview.ID).
+				AddField("🧑‍🤝‍🧑 Approx. members", fmt.Sprint((guild_preview.ApproximateMemberCount))).
+				AddField("🔧 Server features", fmt.Sprintln(guild_preview.Features)).
+				SetColor(3066993).
+				SetThumbnail(guild_preview.IconURL("32")).
+				SetFooter(time.Now().Format(time.RFC1123)).
+				InlineAllFields()
+
+			s.ChannelMessageSendEmbed(i.ChannelID, result.MessageEmbed)
+			//result.NewEmbedRich(Info.OK, "this is an error").SendToChannel(s, i)
 
 			return
 		},

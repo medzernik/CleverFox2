@@ -5,9 +5,10 @@ package Info
 import (
 	"CleverFox2/config"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
 	"strings"
 	"time"
+
+	"github.com/bwmarrin/discordgo"
 )
 
 // Define the iota for an "enum" of the message state
