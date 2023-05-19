@@ -64,6 +64,18 @@ func main() {
 		tviewsystem.MainViewPush(fmt.Sprintf("[%s] %s %s %s", guild_name, e.Author, e.Timestamp.Format(time.Kitchen), e.Content))
 	})
 
+	discord_session.AddHandler(func(s *discordgo.Session, e *discordgo.MessageUpdate) {
+		var guild_name string
+
+		for _, guild := range s.State.Guilds {
+			if guild.ID == e.GuildID {
+				guild_name = guild.Name
+			}
+		}
+
+		tviewsystem.MainViewPush(fmt.Sprintf("[EDITED]:[%s] %s %s %s", guild_name, e.Author, e.Timestamp.Format(time.Kitchen), e.Content))
+	})
+
 	//go spinner.StartSpin(spinner.Finish, "Initializing the session to Discord...")
 	tviewsystem.StatusPush("Initializing the session to Discord...")
 	//fmt.Println("\nInitializing the session to Discord...")
