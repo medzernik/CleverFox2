@@ -43,3 +43,5 @@
 {"level":"info","msg":"Starting the bot...","time":"2023-05-19T21:29:52+02:00"}
 {"level":"trace","msg":"Loaded the logging system","time":"2023-05-19T21:31:39+02:00"}
 {"level":"info","msg":"Starting the bot...","time":"2023-05-19T21:31:39+02:00"}
+{"level":"trace","msg":"Loaded the logging system","time":"2023-05-19T21:33:05+02:00"}
+{"level":"info","msg":"Starting the bot...","time":"2023-05-19T21:33:05+02:00"}
