@@ -119,7 +119,6 @@ var (
 				return
 			}
 
-			return
 		},
 		//termination function itself - only used for terminating the bot specifically, therefore as an anonymous function
 		"terminate": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -144,7 +143,6 @@ var (
 				Type: discordgo.InteractionResponsePong,
 			})
 
-			return
 		},
 		"serverinfo": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -168,9 +166,7 @@ var (
 				InlineAllFields()
 
 			s.ChannelMessageSendEmbed(i.ChannelID, result.MessageEmbed)
-			//result.NewEmbedRich(Info.OK, "this is an error").SendToChannel(s, i)
 
-			return
 		},
 		"botstatus": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
@@ -179,8 +175,6 @@ var (
 
 			var result Info.EmbedInfo
 			result.NewEmbedRich(Info.OK, Info.PrintBotStatus(s, i)).SendToChannel(s, i)
-
-			return
 
 		},
 		"isadmin": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -205,7 +199,6 @@ var (
 			}
 
 			fmt.Println("Is admin:", isAdmin)
-			return
 
 		},
 	}

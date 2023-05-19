@@ -15,6 +15,7 @@ var app = tview.NewApplication()
 
 // Testing
 var StatusTextView = tview.NewTextView()
+var MainTextView = tview.NewTextView()
 
 // For some exemplary reason this must be done like this...
 // init updates all the functions that otherwise return stuff, while keeping the vars in global scope of the package.
@@ -22,13 +23,16 @@ func init() {
 	StatusTextView.SetBorder(true)
 	StatusTextView.SetTitle("Status")
 	StatusTextView.SetScrollable(true)
+	MainTextView.SetBorder(true)
+	MainTextView.SetTitle("CleverFox 2 Go Edition")
+	MainTextView.SetScrollable(true)
 }
 
 // Initiate the main view
 var mainView = tview.NewFlex().
 	AddItem(tview.NewBox().SetBorder(true).SetTitle("Left (1/2 x width of Top)"), 0, 1, false).
 	AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
-		AddItem(tview.NewBox().SetBorder(true).SetTitle("CleverFox 2 Go Edition"), 0, 1, false).
+		AddItem(MainTextView, 0, 1, false).
 		AddItem(StatusTextView, 5, 1, false), 0, 2, false).
 	AddItem(tview.NewBox().SetBorder(true).SetTitle("Right (20 cols)"), 20, 1, false)
 
@@ -77,7 +81,14 @@ func StartGUI() error {
 // StatusPush - function to draw a new status?
 func StatusPush(update string) {
 
-	//StatusTextView.SetText(update).SetScrollable(true)
+	//StatusTextView.SetScrollable(true)
 	StatusTextView.Write(bytes.NewBufferString("[" + time.Now().Format(time.Kitchen) + "] " + update + "\n").Bytes())
+	app.Draw()
+}
+
+// StatusPush - function to draw a new status?
+func MainViewPush(update string) {
+
+	MainTextView.Write(bytes.NewBufferString("[" + time.Now().Format(time.Kitchen) + "] " + update + "\n").Bytes())
 	app.Draw()
 }
