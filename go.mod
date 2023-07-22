@@ -4,10 +4,10 @@ go 1.19
 
 require (
 	github.com/briandowns/spinner v1.23.0
-	github.com/bwmarrin/discordgo v0.27.2-0.20230514155329-1252b71f3800
+	github.com/bwmarrin/discordgo v0.27.2-0.20230704233747-e39e715086d2
 	github.com/gdamore/tcell/v2 v2.6.0
-	github.com/rivo/tview v0.0.0-20230511053024-822bd067b165
-	github.com/sirupsen/logrus v1.9.2
+	github.com/rivo/tview v0.0.0-20230621164836-6cc0565babaf
+	github.com/sirupsen/logrus v1.9.3
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -19,11 +19,11 @@ require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.18 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/term v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/crypto v0.11.0 // indirect
+	golang.org/x/sys v0.10.0 // indirect
+	golang.org/x/term v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 )

@@ -2,8 +2,9 @@ package logging
 
 import (
 	"CleverFox2/config"
-	"github.com/sirupsen/logrus"
 	"os"
+
+	"github.com/sirupsen/logrus"
 )
 
 var Log = logrus.New()
@@ -31,7 +32,7 @@ func StartLogging() error {
 	}
 
 	// You could set this to any `io.Writer` such as a file
-	file, err := os.OpenFile("logs.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("logs.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err == nil {
 		Log.Out = file
 	} else {
