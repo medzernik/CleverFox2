@@ -87,13 +87,13 @@ func main() {
 
 	//Start the listening of the other functions
 	//go spinner.StartSpin(spinner.Finish, "Initializing commands.")
-	tviewsystem.StatusPush("Initializing commands.")
+	tviewsystem.StatusPush("Communicating command updates to Discord...")
 	command.InitializeCommands(discord_session)
 	//spinner.Finish <- struct{}{}
 
 	//time.Sleep(500 * time.Millisecond)
 
-	tviewsystem.StatusPush("Bot is now running. Press ESC and confirm to quit.")
+	tviewsystem.StatusPush("Launch updates completed. Bot is now running. Press ESC and confirm to quit.")
 
 	//Initialize the GUI system. If this fails, fallback to the stdout legacy printouts.
 

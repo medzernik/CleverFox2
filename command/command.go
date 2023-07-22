@@ -87,12 +87,22 @@ var (
 			})
 		},
 		"iban-to-number": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			var result Info.EmbedInfo
+
+			iban, err := ParseIBAN(i.ApplicationCommandData().Options[0].StringValue())
+
+			if err != nil {
+				logging.Log.Debug("Error parsing IBAN: ", err)
+				result.NewEmbedRich(Info.ERROR, fmt.Sprintf(err.Error())).SendToChannel(s, i)
+				return
+			}
+
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
-				Type: discordgo.InteractionResponseChannelMessageWithSource,
-				Data: &discordgo.InteractionResponseData{
-					Content: i.ApplicationCommandData().Options[0].StringValue(),
-				},
+				Type: discordgo.InteractionResponsePong,
 			})
+
+			result.NewEmbedRich(Info.OK, iban.PrintCode).SendToChannel(s, i)
+
 		},
 		"number-to-iban": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
