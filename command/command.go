@@ -24,6 +24,22 @@ var (
 			Description: "Basic command",
 		},
 		{
+			Name:        "iban-to-number",
+			Description: "Test command placeholder",
+			Options: []*discordgo.ApplicationCommandOption{
+				{
+					Type:        discordgo.ApplicationCommandOptionString,
+					Name:        "string-option",
+					Description: "IBAN",
+					Required:    true,
+				},
+			},
+		},
+		{
+			Name:        "number-to-iban",
+			Description: "Test command placeholder",
+		},
+		{
 			Name:                     "permission-overview",
 			Description:              "Command for demonstration of default command permissions",
 			DefaultMemberPermissions: &defaultMemberPermissions,
@@ -67,6 +83,22 @@ var (
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
 					Content: "Hey there! Congratulations, you just executed your first slash command",
+				},
+			})
+		},
+		"iban-to-number": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Content: i.ApplicationCommandData().Options[0].StringValue(),
+				},
+			})
+		},
+		"number-to-iban": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Content: "Placeholder content",
 				},
 			})
 		},
@@ -190,7 +222,7 @@ var (
 				result.NewEmbedRich(Info.ERROR, "Error getting user: "+fmt.Sprintf(err.Error())).SendToChannel(s, i)
 				return
 			}
-			if isAdmin == true {
+			if isAdmin {
 				resultText := "User " + User.ToUserMention().ToString() + " is an admin"
 				result.NewEmbedRich(Info.OK, resultText, "true").SendToChannel(s, i)
 			} else {
@@ -231,9 +263,11 @@ func Start(s *discordgo.Session) {
 	for i, v := range commands {
 		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, "1105531701674922044", v)
 		if err != nil {
-			fmt.Printf("Cannot create '%v' command: %v", v.Name, err)
+			logging.Log.Warn("Cannot create:", v.Name, "command:", v.Name, err)
+			// fmt.Printf("Cannot create '%v' command: %v", v.Name, err)
 		}
 		registeredCommands[i] = cmd
+		logging.Log.Trace("Registered command:", v.Name)
 	}
 
 	/*
