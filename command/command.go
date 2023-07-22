@@ -261,13 +261,16 @@ func Start(s *discordgo.Session) {
 	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
 
 	for i, v := range commands {
-		cmd, err := s.ApplicationCommandCreate(s.State.User.ID, "1105531701674922044", v)
-		if err != nil {
-			logging.Log.Warn("Cannot create:", v.Name, "command:", v.Name, err)
-			// fmt.Printf("Cannot create '%v' command: %v", v.Name, err)
+		for _, guildID := range s.State.Guilds {
+			cmd, err := s.ApplicationCommandCreate(s.State.User.ID, guildID.ID, v)
+			if err != nil {
+				logging.Log.Warn("Cannot create:", v.Name, "command:", v.Name, err)
+				// fmt.Printf("Cannot create '%v' command: %v", v.Name, err)
+			}
+			registeredCommands[i] = cmd
+			logging.Log.Trace("Registered command:", v.Name)
 		}
-		registeredCommands[i] = cmd
-		logging.Log.Trace("Registered command:", v.Name)
+
 	}
 
 	/*
