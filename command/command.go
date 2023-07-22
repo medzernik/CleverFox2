@@ -87,19 +87,18 @@ var (
 			})
 		},
 		"iban-to-number": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponsePong,
+			})
 			var result Info.EmbedInfo
 
 			iban, err := ParseIBAN(i.ApplicationCommandData().Options[0].StringValue())
 
 			if err != nil {
 				logging.Log.Debug("Error parsing IBAN: ", err)
-				result.NewEmbedRich(Info.ERROR, fmt.Sprintf(err.Error())).SendToChannel(s, i)
+				result.NewEmbedRich(Info.ERROR, fmt.Sprint(err.Error())).SendToChannel(s, i)
 				return
 			}
-
-			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
-				Type: discordgo.InteractionResponsePong,
-			})
 
 			result.NewEmbedRich(Info.OK, iban.PrintCode).SendToChannel(s, i)
 
