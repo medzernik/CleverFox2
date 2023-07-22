@@ -100,7 +100,14 @@ var (
 				return
 			}
 
-			result.NewEmbedRich(Info.OK, iban.PrintCode).SendToChannel(s, i)
+			accountNumber, err := IBANtoAccountNumber(iban)
+			if err != nil {
+				logging.Log.Debug("Error parsing IBAN: ", err)
+				result.NewEmbedRich(Info.ERROR, fmt.Sprint(err.Error())).SendToChannel(s, i)
+				return
+			}
+
+			result.NewEmbedRich(Info.OK, accountNumber.ParseToString()).SendToChannel(s, i)
 
 		},
 		"number-to-iban": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
