@@ -111,6 +111,7 @@ var (
 
 		},
 		"number-to-iban": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			GenerateQRCode()
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{

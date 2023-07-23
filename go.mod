@@ -15,6 +15,7 @@ require (
 	code.rocketnine.space/tslocum/cbind v0.1.5 // indirect
 	code.rocketnine.space/tslocum/cview v1.5.7 // indirect
 	github.com/almerlucke/go-iban v0.0.0-20220324081643-09bcab81b879 // indirect
+	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect

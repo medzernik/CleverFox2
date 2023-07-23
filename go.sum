@@ -4,6 +4,8 @@ code.rocketnine.space/tslocum/cview v1.5.7 h1:dUL6jyNp/ubUfeds7G7zq8R3sZY+He+sPG
 code.rocketnine.space/tslocum/cview v1.5.7/go.mod h1:4Wx6exftTIbeRai3s0VVjzVaSNyHlXTg9eHd3s89v9Q=
 github.com/almerlucke/go-iban v0.0.0-20220324081643-09bcab81b879 h1:xjKaRnbsrUym8HlsMOoDuA6jJKx1KMVbwvISBMy340k=
 github.com/almerlucke/go-iban v0.0.0-20220324081643-09bcab81b879/go.mod h1:BOrdqbp9ZIsyviKexs6Hkku/k3oHH0oBeejgQHdA7RE=
+github.com/boombuler/barcode v1.0.1 h1:NDBbPmhS+EqABEs5Kg3n/5ZNjy73Pz7SIV+KCeqyXcs=
+github.com/boombuler/barcode v1.0.1/go.mod h1:paBWMcWSl3LHKBqUq+rly7CNSldXjb2rDl3JlRe0mD8=
 github.com/briandowns/spinner v1.18.1 h1:yhQmQtM1zsqFsouh09Bk/jCjd50pC3EOGsh28gLVvwY=
 github.com/briandowns/spinner v1.18.1/go.mod h1:mQak9GHqbspjC/5iUx3qMlIho8xBS/ppAL/hX5SmPJU=
 github.com/briandowns/spinner v1.19.0 h1:s8aq38H+Qju89yhp89b4iIiMzMm8YN3p6vGpwyh/a8E=
