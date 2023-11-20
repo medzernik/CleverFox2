@@ -3,6 +3,7 @@ package tviewsystem
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"time"
 
@@ -16,25 +17,49 @@ var app = tview.NewApplication()
 // Testing
 var StatusTextView = tview.NewTextView()
 var MainTextView = tview.NewTextView()
+var ActionTextView = tview.NewList()
+var UserTextView = tview.NewList()
 
 // For some exemplary reason this must be done like this...
 // init updates all the functions that otherwise return stuff, while keeping the vars in global scope of the package.
 func init() {
+	StatusViewInit(StatusTextView)
+	MainViewInit(MainTextView)
+	ActionViewInit(ActionTextView)
+	UserViewInit(UserTextView)
+}
+
+func StatusViewInit(StatusTextView *tview.TextView) {
 	StatusTextView.SetBorder(true)
 	StatusTextView.SetTitle("Status")
 	StatusTextView.SetScrollable(true)
+}
+
+func MainViewInit(MainTextView *tview.TextView) {
 	MainTextView.SetBorder(true)
 	MainTextView.SetTitle("CleverFox 2 Go Edition")
 	MainTextView.SetScrollable(true)
 }
 
+func ActionViewInit(ActionTextView *tview.List) {
+	ActionTextView.SetBorder(true)
+	ActionTextView.SetTitle("Actions")
+	ActionTextView.AddItem("Credits", "", 0, func() { ShowCredits() })
+}
+
+func UserViewInit(UserTextView *tview.List) {
+	UserTextView.SetBorder(true)
+	UserTextView.SetTitle("Members")
+
+}
+
 // Initiate the main view
 var mainView = tview.NewFlex().
-	AddItem(tview.NewBox().SetBorder(true).SetTitle("Left (1/2 x width of Top)"), 0, 1, false).
+	AddItem(ActionTextView, 0, 1, true).
 	AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(MainTextView, 0, 1, false).
 		AddItem(StatusTextView, 5, 1, false), 0, 2, false).
-	AddItem(tview.NewBox().SetBorder(true).SetTitle("Right (20 cols)"), 20, 1, false)
+	AddItem(UserTextView, 0, 1, false)
 
 // Initiate the quit dialog
 var quitDialog = tview.NewModal().
@@ -80,7 +105,6 @@ func StartGUI() error {
 
 // StatusPush - function to draw a new status?
 func StatusPush(update string) {
-
 	//StatusTextView.SetScrollable(true)
 	StatusTextView.Write(bytes.NewBufferString("[" + time.Now().Format(time.Kitchen) + "] " + update + "\n").Bytes())
 	app.Draw()
@@ -88,7 +112,16 @@ func StatusPush(update string) {
 
 // StatusPush - function to draw a new status?
 func MainViewPush(update string) {
-
 	MainTextView.Write(bytes.NewBufferString("[" + time.Now().Format(time.Kitchen) + "] " + update + "\n").Bytes())
 	app.Draw()
+}
+
+func MemberListPush(username []string, nick []string) {
+	fmt.Println("AHOJ")
+	UserTextView.Clear()
+	for index, user := range username {
+		UserTextView.AddItem(user, fmt.Sprint("  ", nick[index], "\n"), 0, func() { UserAction() })
+	}
+
+	app.QueueUpdateDraw(func() {})
 }

@@ -52,6 +52,7 @@ func main() {
 	discord_session.Identify.Token = config.Cfg.ServerInfo.ServerToken
 	discord_session.Identify.LargeThreshold = 250
 
+	tviewsystem.StatusPush("Registered new message handlers.")
 	discord_session.AddHandler(func(s *discordgo.Session, e *discordgo.MessageCreate) {
 		var guild_name string
 
@@ -64,6 +65,7 @@ func main() {
 		tviewsystem.MainViewPush(fmt.Sprintf("[%s] %s %s %s", guild_name, e.Author, e.Timestamp.Format(time.Kitchen), e.Content))
 	})
 
+	tviewsystem.StatusPush("Registered edited message handlers.")
 	discord_session.AddHandler(func(s *discordgo.Session, e *discordgo.MessageUpdate) {
 		var guild_name string
 
@@ -76,12 +78,18 @@ func main() {
 		tviewsystem.MainViewPush(fmt.Sprintf("[EDITED]:[%s] %s %s %s", guild_name, e.Author, e.Timestamp.Format(time.Kitchen), e.Content))
 	})
 
+	tviewsystem.StatusPush("Registering user handlers.")
+
+	discord_session.AddHandler(func(s *discordgo.Session, e *discordgo.GuildMemberUpdate) {
+		tviewsystem.UpdateMembers(s)
+	})
+
 	//go spinner.StartSpin(spinner.Finish, "Initializing the session to Discord...")
 	tviewsystem.StatusPush("Initializing the session to Discord...")
 	//fmt.Println("\nInitializing the session to Discord...")
 	err = discord_session.Open()
 	if err != nil {
-		println(err)
+		tviewsystem.StatusPush(err.Error())
 	}
 	//spinner.Finish <- struct{}{}
 
@@ -94,7 +102,7 @@ func main() {
 	//time.Sleep(500 * time.Millisecond)
 
 	tviewsystem.StatusPush("Launch updates completed. Bot is now running. Press ESC and confirm to quit.")
-
+	tviewsystem.UpdateMembers(discord_session)
 	//Initialize the GUI system. If this fails, fallback to the stdout legacy printouts.
 
 	// if err := tviewsystem.StartGUI(); err != nil {
