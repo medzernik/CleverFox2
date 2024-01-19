@@ -8,8 +8,10 @@ import (
 	"CleverFox2/command"
 	"CleverFox2/config"
 	"CleverFox2/logging"
+	"CleverFox2/passive"
 	"CleverFox2/tviewsystem"
 	"fmt"
+	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
@@ -55,6 +57,19 @@ func main() {
 	tviewsystem.StatusPush("Registered new message handlers.")
 	discord_session.AddHandler(func(s *discordgo.Session, e *discordgo.MessageCreate) {
 		var guild_name string
+
+		potentialURL, err := url.Parse(e.Content)
+		if err != nil {
+			tviewsystem.MainViewPush(err.Error())
+		} else if potentialURL.Scheme != "" && potentialURL.Host != "" {
+			oldURL := potentialURL.String()
+			passive.ReplaceURL(potentialURL)
+			if oldURL != potentialURL.String() {
+				s.ChannelMessageDelete(e.ChannelID, e.ID)
+				s.ChannelMessageSend(e.ChannelID, potentialURL.String())
+			}
+
+		}
 
 		for _, guild := range s.State.Guilds {
 			if guild.ID == e.GuildID {

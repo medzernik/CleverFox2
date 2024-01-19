@@ -1,5 +1,42 @@
 package passive
 
+import (
+	"CleverFox2/config"
+	"CleverFox2/tviewsystem"
+	"fmt"
+	"net/url"
+)
+
+// replacer is a map that stores replacement values for specific keys.
+// The keys in the map represent the strings to be replaced, while the
+// corresponding values represent the replacement strings.
+//
+// Example:
+// replacer["x.com"] = "vxtwitter.com"
+// replacer["twitter.com"] = "vxtwitter.com"
+//
+// In the above example, whenever "x.com" or "twitter.com" is found in
+// a given string, it should be replaced with "vxtwitter.com".
+var replacer = map[string]string{
+	"x.com":       "vxtwitter.com",
+	"twitter.com": "vxtwitter.com",
+}
+
+func ReplaceURL(link *url.URL) {
+	// Check if the subsystem is enabled
+	if config.Cfg.Modules.LinkFixer == false {
+		return
+	}
+	// Get the main link part
+
+	if value, exists := replacer[link.Host]; exists == true {
+		tviewsystem.MainViewPush(fmt.Sprintf("Replacing: %s with: %s", link.Host, value))
+		link.Host = value
+	}
+	// Delete the spying part of URL?
+
+}
+
 /*
 // DeleteCringe checks all channels for a specific gif from a specific person and then deletes it if it hasn't been posted in the GIF channel :)
 func DeleteCringe(s *discordgo.Session) {

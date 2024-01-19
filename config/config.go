@@ -18,6 +18,7 @@ type Config struct {
 		LogLevel      string `yaml:"logLevel"`
 	} `yaml:"serverInfo"`
 	Modules struct {
+		LinkFixer bool `yaml:"linkFixer"`
 	} `yaml:"modules"`
 	ChannelLog struct {
 		ChannelLogID       string `yaml:"channelLogID"`
