@@ -149,7 +149,7 @@ var (
 						discordgo.ActionsRow{
 							Components: []discordgo.MessageComponent{
 								discordgo.Button{
-									Emoji: discordgo.ComponentEmoji{
+									Emoji: &discordgo.ComponentEmoji{
 										Name: "⚠️",
 									},
 									Label:    "Kill the bot",

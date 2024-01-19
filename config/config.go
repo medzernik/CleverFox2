@@ -1,5 +1,5 @@
 // Package config Configuration module that holds the configuration logic.
-//This is the global settings for the bot.
+// This is the global settings for the bot.
 package config
 
 import (
